@@ -16,11 +16,15 @@ public class LinesDrawer : MonoBehaviour {
 
 	Camera cam;
 	Vector2 startDrawingPos;
+	LayerMask cast;
  
 	void Start ( ) {
 		cam = Camera.main;
+		//cantDrawOverLayerIndex = cantDrawOverLayer.value;
+
+		cast = LayerMask.GetMask("CantDrawOver");
         cantDrawOverLayerIndex = LayerMask.NameToLayer("CantDrawOver");
-    }
+	}
 
     void Update()
     {
@@ -48,6 +52,10 @@ public class LinesDrawer : MonoBehaviour {
         currentLine.SetLineColor(lineColor);
         currentLine.SetPointsMinDistance(linePointsMinDistance);
 		currentLine.SetLineWidth (lineWidth);
+
+		//currentLine.gameObject.layer = cantDrawOverLayerIndex;
+
+				
 	}
 	// Draw ----------------------------------------------------
 	void Draw ( ) {
@@ -55,8 +63,10 @@ public class LinesDrawer : MonoBehaviour {
 		//Debug.Log(mousePosition);
 		test.transform.position = mousePosition;
 
+		
+
 		//Check if mousePos hits any collider with layer "CantDrawOver", if true cut the line by calling EndDraw( )
-		RaycastHit2D hit = Physics2D.CircleCast(mousePosition, lineWidth / 3f, Vector2.zero, 1f, cantDrawOverLayer);
+		RaycastHit2D hit = Physics2D.CircleCast(mousePosition, lineWidth / 3f, Vector2.zero, 1f, cast);
 
 		mousePosition -= startDrawingPos;
 
