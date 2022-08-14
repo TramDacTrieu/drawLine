@@ -10,12 +10,13 @@ public class LinesDrawer : MonoBehaviour {
 	public Gradient lineColor;
 	public float linePointsMinDistance;
 	public float lineWidth;
+	public GameObject test;
 
 	Line currentLine;
 
 	Camera cam;
-
-
+	Vector2 startDrawingPos;
+ 
 	void Start ( ) {
 		cam = Camera.main;
         cantDrawOverLayerIndex = LayerMask.NameToLayer("CantDrawOver");
@@ -35,10 +36,15 @@ public class LinesDrawer : MonoBehaviour {
 
 	// Begin Draw ----------------------------------------------
 	void BeginDraw () {
-        currentLine = Instantiate(linePrefab, this.transform).GetComponent<Line>();
 
-        //Set line properties
-        currentLine.UsePhysics(false);
+		Vector2 mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
+		//currentLine = Instantiate(linePrefab, this.transform).GetComponent<Line>();
+		startDrawingPos = mousePosition;
+
+		currentLine = Instantiate(linePrefab, mousePosition, Quaternion.identity).GetComponent<Line>();
+
+		//Set line properties
+		currentLine.UsePhysics(false);
         currentLine.SetLineColor(lineColor);
         currentLine.SetPointsMinDistance(linePointsMinDistance);
 		currentLine.SetLineWidth (lineWidth);
@@ -46,10 +52,13 @@ public class LinesDrawer : MonoBehaviour {
 	// Draw ----------------------------------------------------
 	void Draw ( ) {
 		Vector2 mousePosition = cam.ScreenToWorldPoint ( Input.mousePosition );
-		Debug.Log(mousePosition);
+		//Debug.Log(mousePosition);
+		test.transform.position = mousePosition;
 
 		//Check if mousePos hits any collider with layer "CantDrawOver", if true cut the line by calling EndDraw( )
 		RaycastHit2D hit = Physics2D.CircleCast(mousePosition, lineWidth / 3f, Vector2.zero, 1f, cantDrawOverLayer);
+
+		mousePosition -= startDrawingPos;
 
 		if (hit)
 			EndDraw ();

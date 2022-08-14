@@ -33,6 +33,10 @@ public class Line : MonoBehaviour {
 		lineRenderer.positionCount = pointsCount;
 		lineRenderer.SetPosition ( pointsCount - 1, newPoint );
 
+		Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+		Debug.Log("Set position " + (pointsCount - 1) + " " + newPoint + " mouse pos: " + mousePosition);
+
 		//Edge Collider
 		//Edge colliders accept only 2 points or more (we can't create an edge with one point :D )
 		if ( pointsCount > 1 )
