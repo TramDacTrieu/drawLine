@@ -9,6 +9,7 @@ public class LinesDrawer : MonoBehaviour {
     public Gradient lineColor;
     public float linePointsMinDistance;
     public float lineWidth;
+    public BeeHive beeHive;
 
     Line currentLine;
 
@@ -67,6 +68,8 @@ public class LinesDrawer : MonoBehaviour {
                 currentLine.gameObject.layer = cantDrawOverLayerIndex;
                 currentLine.UsePhysics(true);
                 currentLine = null;
+
+                beeHive.SpawnBees();
             }
         }
     }
