@@ -24,13 +24,13 @@ public class Line : MonoBehaviour {
 		points.Add ( newPoint );
 		pointsCount++;
 
-		//Add Circle Collider to the Point
-		CircleCollider2D circleCollider = this.gameObject.AddComponent <CircleCollider2D> ( );
-		circleCollider.offset = newPoint;
-		circleCollider.radius = circleColliderRadius;
+        //Add Circle Collider to the Point
+        CircleCollider2D circleCollider = this.gameObject.AddComponent<CircleCollider2D>();
+        circleCollider.offset = newPoint;
+        circleCollider.radius = circleColliderRadius;
 
-		//Line Renderer
-		lineRenderer.positionCount = pointsCount;
+        //Line Renderer
+        lineRenderer.positionCount = pointsCount;
 		lineRenderer.SetPosition ( pointsCount - 1, newPoint );
 
 		Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
